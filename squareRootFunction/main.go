@@ -1,24 +1,46 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
-func Sqrt(x float64) float64 {
-	// TODO: Consider decimals and if they are UP or DOWN
-	loopEnd := true
-	var finalResult float64
-	for z := 1; loopEnd; z++ {
-		pow := float64(z * z)
-		if pow > x {
-			finalResult = float64(z - 1)
-			loopEnd = false
+func Sqrt(x float64) (float64, error) {
+	var lastIteration string
+	repetitionTicks := 0
+	z := 1.0
+	for repetitionTicks < 3 {
+		z -= (z*z - x) / (2 * z)
+		zDecimal := fmt.Sprintf("%.2f", z)
+		if zDecimal != lastIteration {
+			lastIteration = zDecimal
+		} else {
+			repetitionTicks++
 		}
 	}
-	return finalResult
+	finalResult, err := strconv.ParseFloat(lastIteration, 64)
+	if err != nil {
+		return 0, err
+	}
+	return finalResult, nil
 }
 
 func main() {
-	fmt.Printf("%f\n", Sqrt(1))
-	fmt.Printf("%f\n", Sqrt(2))
-	fmt.Printf("%f\n", Sqrt(4))
-	fmt.Printf("%f\n", Sqrt(120))
+	numbers := []float64{
+		1,
+		1.5,
+		2,
+		3,
+		4,
+		5,
+		120,
+	}
+	for _, n := range numbers {
+		result, err := Sqrt(n)
+		if err != nil {
+			fmt.Sprintf("%v", err)
+			break
+		}
+		fmt.Printf("%f\n", result)
+	}
 }
