@@ -6,7 +6,6 @@ import (
 )
 
 func Test_IPType_String(t *testing.T) {
-	// randNums := []byte{}
 	cases := []struct {
 		ip             IPAddr
 		expectedResult string
