@@ -3,21 +3,16 @@ package main
 import "fmt"
 
 func fibonacci() func() int {
-	sequence := make([]int, 0)
+	sequence := []int{0, 1}
+	i := 0
 	return func() int {
+		if i < 2 {
+			i++
+			return sequence[i-1]
+		}
 		l := len(sequence)
 
-		var nextN int
-		if l == 0 {
-			nextN = 0
-		}
-		if l == 1 {
-			nextN = 1
-		}
-		if l >= 2 {
-			nextN = sequence[l-1] + sequence[l-2]
-		}
-		sequence = append(sequence, nextN)
+		sequence = append(sequence, sequence[l-1]+sequence[l-2])
 		return sequence[l] // Will return the latest value, since sequence is 0 indexed
 	}
 }
