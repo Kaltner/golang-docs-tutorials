@@ -10,7 +10,6 @@ func WordCount(s string) map[string]int {
 
 	totalWords := make(map[string]int)
 	for _, splitStr := range splitedStr {
-		splitStr = strings.ToLower(splitStr)
 		_, ok := totalWords[splitStr]
 		if !ok {
 			totalWords[splitStr] = 0
