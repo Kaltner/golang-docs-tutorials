@@ -47,6 +47,7 @@ func isValid13Rot(origin byte, encrypted byte) bool {
 }
 
 func main() {
+	// TODO: Look for other solutions for this
 	s := strings.NewReader("Lbh penpxrq gur pbqr!")
 	r := rot13Reader{s}
 
