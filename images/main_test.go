@@ -21,10 +21,17 @@ func Test_Image(t *testing.T) {
 		{
 			img: Image{100, 100, 100},
 			expectedResults: testCaseImages{
-				BoundMin:   image.Point{0, 0},
-				BoundMax:   image.Point{100, 100},
-				ColorModel: color.RGBA{101, 101, 255, 255},
-				At:         color.RGBA{101, 101, 255, 255},
+				BoundMin: image.Point{0, 0},
+				BoundMax: image.Point{100, 100},
+				At:       color.RGBA{101, 101, 255, 255},
+			},
+		},
+		{
+			img: Image{200, 50, 0},
+			expectedResults: testCaseImages{
+				BoundMin: image.Point{0, 0},
+				BoundMax: image.Point{200, 50},
+				At:       color.RGBA{1, 1, 255, 255},
 			},
 		},
 	}
@@ -32,6 +39,8 @@ func Test_Image(t *testing.T) {
 	for i, c := range cases {
 		i, c := i, c
 		t.Run(fmt.Sprintf("Test Case N%d", i), func(t *testing.T) {
+			t.Parallel()
+
 			img := c.img
 
 			rectangle := img.Bounds()
@@ -42,6 +51,11 @@ func Test_Image(t *testing.T) {
 			if rectangle.Max != c.expectedResults.BoundMax {
 				t.Fatalf("Unexpected retangle Max value. \n Got: %v \n Expected: %v", rectangle.Max, c.expectedResults.BoundMax)
 			}
+
+			if img.At(1, 1) != c.expectedResults.At {
+				t.Fatalf("Unexpected At value. \n Got: %v \n Expected: %v", img.At(1, 1), c.expectedResults.At)
+			}
 		})
 	}
+
 }
