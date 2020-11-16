@@ -58,32 +58,14 @@ func createResults(ch chan int) []int {
 }
 
 func main() {
-	// ch1 := make(chan int)
-	t1 := tree.New(1)
+	ch := make(chan int)
+	t := tree.New(1)
+	go Walk(t, ch)
 
-	// go Walk(t1, ch1)
+	for num := range ch {
+		fmt.Println(num)
+	}
 
-	// ch2 := make(chan int, 10)
-	t2 := tree.New(255)
-
-	// go Walk(t2, ch2)
-
-	// nums1 := make([]int, 0)
-	// for i := 0; i < 10; i++ {
-	// 	nums1[i] = <-ch1
-	// }
-	// for val := range ch1 {
-	// nums1 = append(nums1, val)
-	// }
-
-	// fmt.Println(nums1)
-
-	// nums2 := make([]int, 10)
-	// for i := 0; i < 10; i++ {
-	// 	nums2[i] = <-ch2
-	// }
-	// fmt.Println(nums2)
-
-	fmt.Println(Same(t1, t1))
-	fmt.Println(Same(t1, t2))
+	fmt.Println(Same(tree.New(1), tree.New(1)))
+	fmt.Println(Same(tree.New(1), tree.New(2)))
 }
